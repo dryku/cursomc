@@ -1,11 +1,14 @@
 package com.adrianosantos.cursomc.dominio;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 
 @Entity
 public class Categoria implements Serializable {
@@ -16,6 +19,9 @@ public class Categoria implements Serializable {
 	private Integer idcategoria; 
 	private String nmcategoria;
 	
+	@ManyToMany (mappedBy="categorias")	
+	private List<Produto> produtos = new ArrayList<>();
+	
 	public Categoria() {};
 	
 
@@ -25,23 +31,37 @@ public class Categoria implements Serializable {
 		this.nmcategoria = nmcategoria;
 	}
 
+
 	public Integer getIdcategoria() {
 		return idcategoria;
 	}
+
 
 	public void setIdcategoria(Integer idcategoria) {
 		this.idcategoria = idcategoria;
 	}
 
+
 	public String getNmcategoria() {
 		return nmcategoria;
 	}
+
 
 	public void setNmcategoria(String nmcategoria) {
 		this.nmcategoria = nmcategoria;
 	}
 
-	
+
+	public List<Produto> getProdutos() {
+		return produtos;
+	}
+
+
+	public void setProdutos(List<Produto> produtos) {
+		this.produtos = produtos;
+	}
+
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -49,6 +69,7 @@ public class Categoria implements Serializable {
 		result = prime * result + ((idcategoria == null) ? 0 : idcategoria.hashCode());
 		return result;
 	}
+
 
 	@Override
 	public boolean equals(Object obj) {
@@ -65,11 +86,6 @@ public class Categoria implements Serializable {
 		} else if (!idcategoria.equals(other.idcategoria))
 			return false;
 		return true;
-	}
-
-	@Override
-	public String toString() {
-		return "Categorias [idcategoria=" + idcategoria + ", nmcategoria=" + nmcategoria + "]";
 	}
 	
 }
