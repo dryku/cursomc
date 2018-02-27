@@ -12,10 +12,10 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 import com.adrianosantos.cursomc.dominio.enums.TipoCliente;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 @Entity
 public class Cliente implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -28,7 +28,8 @@ public class Cliente implements Serializable {
 	private String emailcliente;
 	private String cpfOuCnpj;
 	private Integer tipoCliente;
-	
+
+	@JsonManagedReference
 	@OneToMany(mappedBy="çliente")
 	private List<Endereco> enderecos = new ArrayList<>();
 	
