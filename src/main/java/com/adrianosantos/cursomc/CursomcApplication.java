@@ -1,6 +1,7 @@
 package com.adrianosantos.cursomc;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 
@@ -14,6 +15,7 @@ import com.adrianosantos.cursomc.dominio.Cidade;
 import com.adrianosantos.cursomc.dominio.Cliente;
 import com.adrianosantos.cursomc.dominio.Endereco;
 import com.adrianosantos.cursomc.dominio.Estado;
+import com.adrianosantos.cursomc.dominio.ItemPedido;
 import com.adrianosantos.cursomc.dominio.Pagamento;
 import com.adrianosantos.cursomc.dominio.Pedido;
 import com.adrianosantos.cursomc.dominio.PgtoBoleto;
@@ -26,6 +28,7 @@ import com.adrianosantos.cursomc.repositorios.CidadeRepositorio;
 import com.adrianosantos.cursomc.repositorios.ClienteRepositorio;
 import com.adrianosantos.cursomc.repositorios.EnderecoRepositorio;
 import com.adrianosantos.cursomc.repositorios.EstadoRepositorio;
+import com.adrianosantos.cursomc.repositorios.ItemPedidoRepositorio;
 import com.adrianosantos.cursomc.repositorios.PagamentoRepositorio;
 import com.adrianosantos.cursomc.repositorios.PedidoRepositorio;
 import com.adrianosantos.cursomc.repositorios.ProdutoRepositorio;
@@ -49,7 +52,10 @@ public class CursomcApplication implements CommandLineRunner {
 	PedidoRepositorio pedrepo;
 	@Autowired
 	PagamentoRepositorio pgtorepo;
-
+	@Autowired
+	ItemPedidoRepositorio itempedrepo;
+	
+	
 	public static void main(String[] args) {
 		SpringApplication.run(CursomcApplication.class, args);
 	}
@@ -120,5 +126,19 @@ public class CursomcApplication implements CommandLineRunner {
 
 		pedrepo.save(Arrays.asList(ped1, ped2));
 		pgtorepo.save(Arrays.asList(pgto1, pgto2));
+		
+		ItemPedido ip1 = new ItemPedido(ped1, prod1, 0.00, 1, 2000.00);
+		ItemPedido ip2 = new ItemPedido(ped1, prod3, 0.00, 2, 80.00);
+		ItemPedido ip3 = new ItemPedido(ped2, prod2, 100.00, 1, 800.00);
+		
+		ped1.getItens().addAll(Arrays.asList(ip1, ip2));
+		ped2.getItens().addAll(Arrays.asList(ip3));
+		
+		prod1.getItens().addAll(Arrays.asList(ip1));
+		prod2.getItens().addAll(Arrays.asList(ip3));
+		prod3.getItens().addAll(Arrays.asList(ip2));
+
+		itempedrepo.save(Arrays.asList(ip1, ip2,ip3));
+	
 	}
 }
