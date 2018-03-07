@@ -1,10 +1,13 @@
 package com.adrianosantos.cursomc.services;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import com.adrianosantos.cursomc.dominio.Categoria;
+import com.adrianosantos.cursomc.dto.CategoriaDTO;
 import com.adrianosantos.cursomc.repositorios.CategoriaRepositorio;
 import com.adrianosantos.cursomc.services.exceptions.DataIntegrityViolationExcep;
 import com.adrianosantos.cursomc.services.exceptions.ObjectNotFounException;
@@ -43,6 +46,9 @@ public class CategoriaService {
 			// TODO: handle exception
 		throw new DataIntegrityViolationExcep("Não é possivel exluir uma categoria que contenha produtos vinculados a ela");
 		}
+	}
 
+	public List<Categoria> listaCategoria() {
+		return catrep.findAll();
 	};
 }
