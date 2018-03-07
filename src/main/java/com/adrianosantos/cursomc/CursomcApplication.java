@@ -78,10 +78,10 @@ public class CursomcApplication implements CommandLineRunner {
 		
 		catrepo.save(Arrays.asList(cat1, cat2));
 		
-/*		for (int i = 0; i < 1000; i++) {
+		for (int i = 0; i < 1000; i++) {
 			Categoria cat = new Categoria(null, "Categoria teste "+i); 
 			catrepo.save(cat);
-		}*/
+		}
 
 		prodrepo.save(Arrays.asList(prod1, prod2, prod3));
 
