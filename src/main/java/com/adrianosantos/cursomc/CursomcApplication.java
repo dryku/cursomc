@@ -1,7 +1,6 @@
 package com.adrianosantos.cursomc;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 
@@ -65,7 +64,7 @@ public class CursomcApplication implements CommandLineRunner {
 
 		Categoria cat1 = new Categoria(null, "Informatica");
 		Categoria cat2 = new Categoria(null, "Escritorio");
-
+		
 		Produto prod1 = new Produto(null, "Computador", 2.000);
 		Produto prod2 = new Produto(null, "Impressora", 1.500);
 		Produto prod3 = new Produto(null, "Mouse", 20.00);
@@ -76,8 +75,14 @@ public class CursomcApplication implements CommandLineRunner {
 		prod1.getCategorias().addAll(Arrays.asList(cat1));
 		prod2.getCategorias().addAll(Arrays.asList(cat1, cat2));
 		prod3.getCategorias().addAll(Arrays.asList(cat1));
-
+		
 		catrepo.save(Arrays.asList(cat1, cat2));
+		
+/*		for (int i = 0; i < 1000; i++) {
+			Categoria cat = new Categoria(null, "Categoria teste "+i); 
+			catrepo.save(cat);
+		}*/
+
 		prodrepo.save(Arrays.asList(prod1, prod2, prod3));
 
 		Estado est1 = new Estado(null, "Minas Gerais");
@@ -138,7 +143,6 @@ public class CursomcApplication implements CommandLineRunner {
 		prod2.getItens().addAll(Arrays.asList(ip3));
 		prod3.getItens().addAll(Arrays.asList(ip2));
 
-		itempedrepo.save(Arrays.asList(ip1, ip2,ip3));
-	
+		itempedrepo.save(Arrays.asList(ip1, ip2,ip3));	
 	}
 }
