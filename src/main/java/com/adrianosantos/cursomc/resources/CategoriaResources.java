@@ -4,9 +4,10 @@ import java.net.URI;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -29,13 +30,13 @@ public class CategoriaResources {
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public ResponseEntity<?> buscarCategoriaId(@PathVariable Integer id) {
-
 		Categoria obj = catservice.buscar(id);
 		return ResponseEntity.ok().body(obj);
 	}
 
 	@RequestMapping(method = RequestMethod.POST)
-	public ResponseEntity<Void> salvar(@RequestBody Categoria objcat) {
+	public ResponseEntity<Void> salvar(@Valid @RequestBody CategoriaDTO objDTO) {
+		Categoria objcat = catservice.categoriaParaDTO(objDTO);
 		objcat = catservice.salvar(objcat);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{idcategoria}")
 				.buildAndExpand(objcat.getIdcategoria()).toUri();
@@ -44,7 +45,8 @@ public class CategoriaResources {
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-	public ResponseEntity<Void> atualizar(@RequestBody Categoria objcat, @PathVariable Integer id) {
+	public ResponseEntity<Void> atualizar(@Valid @RequestBody CategoriaDTO objDTO, @PathVariable Integer id) {
+		Categoria objcat = catservice.categoriaParaDTO(objDTO);
 		objcat.setIdcategoria(id);
 		objcat = catservice.atualizar(objcat);
 		return ResponseEntity.noContent().build();
