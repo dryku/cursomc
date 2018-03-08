@@ -47,22 +47,23 @@ public class CategoriaService {
 			catrep.delete(idcat);
 		} catch (DataIntegrityViolationException e) {
 			// TODO: handle exception
-		throw new DataIntegrityViolationExcep("Não é possivel exluir uma categoria que contenha produtos vinculados a ela");
+			throw new DataIntegrityViolationExcep(
+					"Não é possivel exluir uma categoria que contenha produtos vinculados a ela");
 		}
 	}
 
 	public List<Categoria> listaCategoria() {
 		return catrep.findAll();
 	};
-	
-	public Page<Categoria> buscaPagina( Integer pagina, Integer qtdlinha, String direcao, String orderBy){
+
+	public Page<Categoria> buscaPagina(Integer pagina, Integer qtdlinha, String direcao, String orderBy) {
 		PageRequest pageRequest = new PageRequest(pagina, qtdlinha, Direction.valueOf(direcao), orderBy);
 		return catrep.findAll(pageRequest);
 	}
 
-public Categoria categoriaParaDTO(CategoriaDTO objDTO) {
-	return new Categoria(objDTO.getIdcategoria(), objDTO.getNmcategoria());
-}
+	public Categoria categoriaParaDTO(CategoriaDTO objDTO) {
+		return new Categoria(objDTO.getIdcategoria(), objDTO.getNmcategoria());
+	}
 
 }
 
