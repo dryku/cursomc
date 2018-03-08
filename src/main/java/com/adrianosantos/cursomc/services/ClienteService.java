@@ -9,9 +9,15 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
+import com.adrianosantos.cursomc.dominio.Cidade;
 import com.adrianosantos.cursomc.dominio.Cliente;
+import com.adrianosantos.cursomc.dominio.Endereco;
+import com.adrianosantos.cursomc.dominio.enums.TipoCliente;
+import com.adrianosantos.cursomc.dto.ClienteCadastroDTO;
 import com.adrianosantos.cursomc.dto.ClienteDTO;
+import com.adrianosantos.cursomc.repositorios.CidadeRepositorio;
 import com.adrianosantos.cursomc.repositorios.ClienteRepositorio;
+import com.adrianosantos.cursomc.repositorios.EnderecoRepositorio;
 import com.adrianosantos.cursomc.services.exceptions.DataIntegrityViolationExcep;
 import com.adrianosantos.cursomc.services.exceptions.ObjectNotFounException;
 
@@ -20,6 +26,10 @@ public class ClienteService {
 
 	@Autowired
 	public ClienteRepositorio clirep;
+	@Autowired
+	public CidadeRepositorio cidrep;
+	@Autowired
+	public EnderecoRepositorio endrep;
 
 	public Cliente buscar(Integer idcli) {
 		Cliente obj = clirep.findOne(idcli);
@@ -30,8 +40,14 @@ public class ClienteService {
 	}
 
 	public Cliente salvar(Cliente objcli) {
-		// objcat.setIdcategoria(null);
-		return clirep.save(objcli);
+		objcli.setIdcliente(null);
+		clirep.save(objcli);
+		endrep.save(objcli.getEnderecos());
+		
+		System.out.println("Salando novo cliente com os telefones: " +objcli.getTelefones());
+		
+		
+		return objcli;
 	}
 
 	public Cliente atualizar(Cliente obj) {
@@ -45,7 +61,6 @@ public class ClienteService {
 		newobj.setEmailcliente(obj.getEmailcliente());
 	}
 
-	
 	public void excluir(Integer idcli) {
 		buscar(idcli);
 		try {
@@ -66,8 +81,32 @@ public class ClienteService {
 		return clirep.findAll(pageRequest);
 	}
 
-	public Cliente categoriaParaDTO(ClienteDTO objDTO) {
+	public Cliente clienteParaDTO(ClienteDTO objDTO) {
 		return new Cliente(objDTO.getIdcliente(), objDTO.getNmcliente(), objDTO.getEmailcliente(), null, null);
+	}
+
+	public Cliente clienteParaDTO(ClienteCadastroDTO objDTO) {
+		Cliente cli = new Cliente(null, objDTO.getNmcliente(), objDTO.getEmailcliente(), objDTO.getCep(),
+				TipoCliente.toEnum(objDTO.getTipoCliente()));
+
+		Cidade cid = cidrep.findOne(objDTO.getCidade());
+		Endereco end = new Endereco(null, objDTO.getLogradouro(), objDTO.getNumero(), objDTO.getComplemento(),
+				objDTO.getBairro(), objDTO.getCep(), cli, cid);
+		cli.getEnderecos().add(end);
+		
+		cli.getTelefones().add(objDTO.getTelefone1());
+/*		cli.getTelefones().add("984493522");
+		System.out.println("Inserindo Telefone1: " + objDTO.getTelefone1());
+		System.out.println("Inserindo Telefoneteste: " + objDTO.getTelefoneteste());
+*/		
+		if (objDTO.getTelefone2() != null) {
+			cli.getTelefones().add(objDTO.getTelefone2());
+		}
+		if (objDTO.getTelefone3() != null) {
+			cli.getTelefones().add(objDTO.getTelefone3());
+		}
+
+		return cli;
 	}
 
 }

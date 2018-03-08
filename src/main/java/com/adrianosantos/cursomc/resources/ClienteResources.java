@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.adrianosantos.cursomc.dominio.Cliente;
-import com.adrianosantos.cursomc.dominio.Cliente;
+import com.adrianosantos.cursomc.dto.ClienteCadastroDTO;
 import com.adrianosantos.cursomc.dto.ClienteDTO;
 import com.adrianosantos.cursomc.services.ClienteService;
 
@@ -38,8 +38,8 @@ public class ClienteResources {
 
 
 	@RequestMapping(method = RequestMethod.POST)
-	public ResponseEntity<Void> salvar(@Valid @RequestBody ClienteDTO objDTO) {
-		Cliente objcli = cliservice.categoriaParaDTO(objDTO);
+	public ResponseEntity<Void> salvar(@Valid @RequestBody ClienteCadastroDTO objDTO) {
+		Cliente objcli = cliservice.clienteParaDTO(objDTO);
 		objcli = cliservice.salvar(objcli);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{idcliente}")
 				.buildAndExpand(objcli.getIdcliente()).toUri();
@@ -49,7 +49,7 @@ public class ClienteResources {
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
 	public ResponseEntity<Void> atualizar(@Valid @RequestBody ClienteDTO objDTO, @PathVariable Integer id) {
-		Cliente objcli = cliservice.categoriaParaDTO(objDTO);
+		Cliente objcli = cliservice.clienteParaDTO(objDTO);
 		objcli.setIdcliente(id);
 		objcli = cliservice.atualizar(objcli);
 		return ResponseEntity.noContent().build();
