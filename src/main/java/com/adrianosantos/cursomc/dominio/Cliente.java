@@ -6,12 +6,14 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.CollectionTable;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 
 import com.adrianosantos.cursomc.dominio.enums.TipoCliente;
@@ -31,7 +33,7 @@ public class Cliente implements Serializable {
 	private String cpfOuCnpj;
 	private Integer tipoCliente;
 
-	@OneToMany(mappedBy="çliente")
+	@OneToMany(mappedBy="çliente", cascade=CascadeType.ALL)
 	private List<Endereco> enderecos = new ArrayList<>();
 	
 	@ElementCollection()
