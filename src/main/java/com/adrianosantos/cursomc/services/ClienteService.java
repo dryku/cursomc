@@ -34,15 +34,15 @@ public class ClienteService {
 		return clirep.save(objcli);
 	}
 
-	public Cliente atualizar(Cliente objcli) {
-		Cliente newobjcli = buscar(objcli.getIdcliente());
-		atualizaObjCliente(newobjcli, objcli);
-		return clirep.save(newobjcli);
+	public Cliente atualizar(Cliente obj) {
+		Cliente newobj = buscar(obj.getIdcliente());
+		atualizaObjCliente(newobj, obj);
+		return clirep.save(newobj);
 	}
 
-	private void atualizaObjCliente(Cliente newobjcli, Cliente objcli) {
-		newobjcli.setNmcliente(objcli.getNmcliente());
-		newobjcli.setEmailcliente(objcli.getEmailcliente());
+	private void atualizaObjCliente(Cliente newobj, Cliente obj) {
+		newobj.setNmcliente(obj.getNmcliente());
+		newobj.setEmailcliente(obj.getEmailcliente());
 	}
 
 	

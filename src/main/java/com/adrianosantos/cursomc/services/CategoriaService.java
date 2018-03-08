@@ -10,6 +10,7 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
 import com.adrianosantos.cursomc.dominio.Categoria;
+import com.adrianosantos.cursomc.dominio.Cliente;
 import com.adrianosantos.cursomc.dto.CategoriaDTO;
 import com.adrianosantos.cursomc.repositorios.CategoriaRepositorio;
 import com.adrianosantos.cursomc.services.exceptions.DataIntegrityViolationExcep;
@@ -35,10 +36,21 @@ public class CategoriaService {
 		return catrep.save(objcat);
 	}
 
-	public Categoria atualizar(Categoria objcat) {
-		buscar(objcat.getIdcategoria());
-		return catrep.save(objcat);
+
+	
+	
+	public Categoria atualizar(Categoria obj) {
+		Categoria newobj = buscar(obj.getIdcategoria());
+		atualizaObjCategoria(newobj, obj);
+		return catrep.save(newobj);
 	}
+
+	private void atualizaObjCategoria(Categoria newobj, Categoria obj) {
+		newobj.setNmcategoria(obj.getNmcategoria());
+	}
+	
+	
+	
 
 	public void excluir(Integer idcat) {
 		buscar(idcat);
