@@ -2,6 +2,7 @@ package com.adrianosantos.cursomc.dto;
 
 import java.io.Serializable;
 
+import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import com.adrianosantos.cursomc.services.validation.InserirCliente;
@@ -11,6 +12,8 @@ public class ClienteCadastroDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private String nmcliente;
+	
+	@Email(message="E-mail inválido")
 	private String emailcliente;
 
 	@NotEmpty(message="Preenchimento Obrigátorio")
