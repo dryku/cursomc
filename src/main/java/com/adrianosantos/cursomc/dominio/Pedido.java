@@ -25,8 +25,8 @@ public class Pedido implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer idpedido;
-	
-	@JsonFormat(pattern="dd/MM/yyyy hh:mm:ss")
+
+	@JsonFormat(pattern = "dd/MM/yyyy hh:mm:ss")
 	private Date dtapedido;
 
 	@OneToOne(cascade = CascadeType.ALL, mappedBy = "pedido")
@@ -52,6 +52,14 @@ public class Pedido implements Serializable {
 		this.setDtapedido(dtapedido);
 		this.cliente = cliente;
 		this.enderecoEntrega = enderecoEntrega;
+	}
+
+	public double getValorTotal() {
+		double soma = 0.0;
+		for (ItemPedido itemPedido : itens) {
+			soma = soma + itemPedido.getSubTotal();
+		}
+		return soma;
 	}
 
 	public Integer getIdpedido() {
