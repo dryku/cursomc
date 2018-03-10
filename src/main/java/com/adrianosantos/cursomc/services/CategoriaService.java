@@ -35,9 +35,6 @@ public class CategoriaService {
 		// objcat.setIdcategoria(null);
 		return catrep.save(objcat);
 	}
-
-
-	
 	
 	public Categoria atualizar(Categoria obj) {
 		Categoria newobj = buscar(obj.getIdcategoria());
@@ -50,8 +47,6 @@ public class CategoriaService {
 	}
 	
 	
-	
-
 	public void excluir(Integer idcat) {
 		buscar(idcat);
 		try {
