@@ -3,8 +3,10 @@ package com.adrianosantos.cursomc.dominio;
 import javax.persistence.Entity;
 
 import com.adrianosantos.cursomc.dominio.enums.EstadoPgto;
+import com.fasterxml.jackson.annotation.JsonTypeName;
 
 @Entity
+@JsonTypeName("pgtoCartao")
 public class PgtoCartao extends Pagamento {
 	private static final long serialVersionUID = 1L;
 	
@@ -18,7 +20,8 @@ public class PgtoCartao extends Pagamento {
 	public PgtoCartao(Integer idpgto, EstadoPgto estadopgto, Pedido pedido,
 			Integer nroparcelas) {
 		super(idpgto, estadopgto, pedido);
-		
+	
+//		this.nroparcelas = nroparcelas;
 		this.setNroparcelas(nroparcelas);
 
 	}

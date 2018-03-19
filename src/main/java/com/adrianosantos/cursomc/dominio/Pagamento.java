@@ -10,13 +10,15 @@ import javax.persistence.JoinColumn;
 import javax.persistence.MapsId;
 import javax.persistence.OneToOne;
 
-import com.adrianosantos.cursomc.dominio.enums.EstadoPgto;
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.adrianosantos.cursomc.dominio.enums.EstadoPgto;
 
 @Entity
 @Inheritance(strategy=InheritanceType.JOINED)
-public abstract class Pagamento implements Serializable {
+
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "@type")
+public class Pagamento implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	@Id
@@ -87,9 +89,5 @@ public abstract class Pagamento implements Serializable {
 			return false;
 		return true;
 	}
-	
-	
-	
-	
 
 }

@@ -17,7 +17,7 @@ import com.adrianosantos.cursomc.dominio.Cidade;
 import com.adrianosantos.cursomc.dominio.Cliente;
 import com.adrianosantos.cursomc.dominio.Endereco;
 import com.adrianosantos.cursomc.dominio.Estado;
-import com.adrianosantos.cursomc.dominio.ItemPedido;
+import com.adrianosantos.cursomc.dominio.FormaPagamentoDRY;
 import com.adrianosantos.cursomc.dominio.Pagamento;
 import com.adrianosantos.cursomc.dominio.Pedido;
 import com.adrianosantos.cursomc.dominio.PgtoBoleto;
@@ -30,6 +30,7 @@ import com.adrianosantos.cursomc.repositorios.CidadeRepositorio;
 import com.adrianosantos.cursomc.repositorios.ClienteRepositorio;
 import com.adrianosantos.cursomc.repositorios.EnderecoRepositorio;
 import com.adrianosantos.cursomc.repositorios.EstadoRepositorio;
+import com.adrianosantos.cursomc.repositorios.FormaPagamentoRepositorio;
 import com.adrianosantos.cursomc.repositorios.ItemPedidoRepositorio;
 import com.adrianosantos.cursomc.repositorios.PagamentoRepositorio;
 import com.adrianosantos.cursomc.repositorios.PedidoRepositorio;
@@ -56,7 +57,10 @@ public class CursomcApplication implements CommandLineRunner {
 	PagamentoRepositorio pgtorepo;
 	@Autowired
 	ItemPedidoRepositorio itempedrepo;
-
+	@Autowired
+	FormaPagamentoRepositorio formapagamentorep;  
+	
+	
 	public static void main(String[] args) {
 		SpringApplication.run(CursomcApplication.class, args);
 	}
@@ -80,7 +84,7 @@ public class CursomcApplication implements CommandLineRunner {
 		Produto prod1 = new Produto(null, "Computador", 2.000);
 		Produto prod2 = new Produto(null, "Impressora", 1.500);
 		Produto prod3 = new Produto(null, "Mouse", 20.15);
-
+			
 		cat1.getProdutos().addAll(Arrays.asList(prod1, prod2, prod3));
 		cat2.getProdutos().addAll(Arrays.asList(prod2));
 
@@ -97,14 +101,25 @@ public class CursomcApplication implements CommandLineRunner {
 			list.add(cat);
 			catrepo.save(cat);
 		}
+		
+		
+		
 		for (int i = 0; i < list.size(); i++) {
-			System.out.println("Categorias Adicionadas: " + list.get(i).getNmcategoria());
+			Integer nroparcelas = gerador.nextInt(8)+1;
+			FormaPagamentoDRY forma = new FormaPagamentoDRY(null, "Forma Pagamento"+i, 
+					new Date(), nroparcelas);
+			formapagamentorep.save(forma);
+			
+			System.out.println("Adicionando nosas formas de pagamento: " + forma.getNmFormaPagamento());
 		}
+		
+		
+		
 		
 		prodrepo.save(Arrays.asList(prod1, prod2, prod3));
 
 		
-		for (int i = 0; i < 50; i++) {
+		for (int i = 0; i < 10; i++) {
 			Integer nrocat = gerador.nextInt(10);
 			Double preco = gerador.nextDouble() * 2000;
 			
@@ -161,10 +176,10 @@ public class CursomcApplication implements CommandLineRunner {
 
 		pedrepo.save(Arrays.asList(ped1, ped2));
 		pgtorepo.save(Arrays.asList(pgto1, pgto2));
-
-		ItemPedido ip1 = new ItemPedido(ped1, prod1, 0.00, 1, 2000.00);
-		ItemPedido ip2 = new ItemPedido(ped1, prod3, 0.00, 2, 80.00);
-		ItemPedido ip3 = new ItemPedido(ped2, prod2, 100.00, 1, 800.00);
+/*
+		ItemPedidoNew ip1 = new ItemPedidoNew(ped1, prod1, 0.00, 1, 2000.00);
+		ItemPedidoNew ip2 = new ItemPedidoNew(ped1, prod3, 0.00, 2, 80.00);
+		ItemPedidoNew ip3 = new ItemPedidoNew(ped2, prod2, 100.00, 1, 800.00);
 
 		ped1.getItens().addAll(Arrays.asList(ip1, ip2));
 		ped2.getItens().addAll(Arrays.asList(ip3));
@@ -174,5 +189,5 @@ public class CursomcApplication implements CommandLineRunner {
 		prod3.getItens().addAll(Arrays.asList(ip2));
 
 		itempedrepo.save(Arrays.asList(ip1, ip2, ip3));
-	}
+*/	}
 }

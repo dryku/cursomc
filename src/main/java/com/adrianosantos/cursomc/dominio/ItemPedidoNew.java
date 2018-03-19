@@ -8,20 +8,20 @@ import javax.persistence.Entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
-public class ItemPedido implements Serializable {
+public class ItemPedidoNew implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	@JsonIgnore
 	@EmbeddedId
-	private ItemPedidoPK id = new ItemPedidoPK();
+	private ItemPedidoPKNew id = new ItemPedidoPKNew();
 	private Double descontoitem;
 	private Integer qtdItem;
 	private Double precoitem;
 
-	ItemPedido() {
+	ItemPedidoNew() {
 	}
 
-	public ItemPedido(Pedido pedido, Produto produto, Double descontoitem, Integer qtdItem, Double precoitem) {
+	public ItemPedidoNew(PedidoNew pedido, Produto produto, Double descontoitem, Integer qtdItem, Double precoitem) {
 		super();
 		id.setPedido(pedido);
 		id.setProduto(produto);
@@ -37,11 +37,11 @@ public class ItemPedido implements Serializable {
 
 
 	@JsonIgnore
-	public Pedido getPedido() {
+	public PedidoNew getPedido() {
 		return id.getPedido();
 	}
 
-	public void setPedido(Pedido pedido) {
+	public void setPedidoNew(PedidoNew pedido) {
 		id.setPedido(pedido);
 	}
 	
@@ -53,11 +53,11 @@ public class ItemPedido implements Serializable {
 		id.setProduto(produto);
 	}
 	
-	public ItemPedidoPK getId() {
+	public ItemPedidoPKNew getId() {
 		return id;
 	}
 
-	public void setId(ItemPedidoPK id) {
+	public void setId(ItemPedidoPKNew id) {
 		this.id = id;
 	}
 
@@ -101,7 +101,7 @@ public class ItemPedido implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		ItemPedido other = (ItemPedido) obj;
+		ItemPedidoNew other = (ItemPedidoNew) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;

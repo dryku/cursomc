@@ -23,7 +23,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
-public class Pedido implements Serializable {
+public class PedidoNew implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -35,41 +35,35 @@ public class Pedido implements Serializable {
 	private String estadoPagamento;
 	private Integer estadoPgto;
 
-	@OneToOne(cascade = CascadeType.ALL, mappedBy = "pedido")
+/*	@OneToOne(cascade = CascadeType.ALL, mappedBy = "pedido")
 	private Pagamento pgto;
-
-
-/*	@JsonIgnore
-	@ManyToMany(cascade = CascadeType.ALL)
-	@JoinTable(name = "PEDIDO_FORMAPAGAMENTO", joinColumns = @JoinColumn(name = "pedido_id"), inverseJoinColumns = @JoinColumn(name = "formapagamento_id"))
-	private List<FormaPagamentoDRY> formapagamentos = new ArrayList<>();
 */
 	@ManyToOne
 	@JoinColumn(name = "cliente_id")
-	private Cliente cliente;
+	private Cliente clientePedido;
 
 	@ManyToOne
 	@JoinColumn(name = "enderecoentrega_id")
 	private Endereco enderecoEntrega;
 
 	@OneToMany(mappedBy = "id.pedido")
-	private Set<ItemPedido> itens = new HashSet<>();
+	private Set<ItemPedidoNew> itens = new HashSet<>();
 
-	public Pedido() {
+	public PedidoNew() {
 	}
 
-	public Pedido(Integer idpedido, Date dtapedido, Cliente cliente, Endereco enderecoEntrega) {
+	public PedidoNew(Integer idpedido, Date dtapedido, Cliente cliente, Endereco enderecoEntrega) {
 		super();
 		this.setIdpedido(idpedido);
 		this.setDtapedido(dtapedido);
-		this.cliente = cliente;
+		this.clientePedido = cliente;
 		this.enderecoEntrega = enderecoEntrega;
 	}
 
 	public double getValorTotal() {
 		double soma = 0.0;
-		for (ItemPedido itemPedido : itens) {
-			soma = soma + itemPedido.getSubTotal();
+		for (ItemPedidoNew itemPedidoNew : itens) {
+			soma = soma + itemPedidoNew.getSubTotal();
 		}
 		return soma;
 	}
@@ -90,31 +84,24 @@ public class Pedido implements Serializable {
 		this.dtapedido = dtapedido;
 	}
 
-    public Pagamento getPgto() {
+/*    public Pagamento getPgto() {
 		return pgto;
 	}
 
 	public void setPgto(Pagamento pgto) {
 		this.pgto = pgto;
 	}
-
-/*	public List<FormaPagamentoDRY> getFormapagamentos() {
-		return formapagamentos;
-	}
-
-	public void setFormapagamentos(List<FormaPagamentoDRY> formapagamentos) {
-		this.formapagamentos = formapagamentos;
-	}
 */
 
-	public Cliente getCliente() {
-		return cliente;
+	public Cliente getClientePedido() {
+		return clientePedido;
 	}
 
-	public void setCliente(Cliente cliente) {
-		this.cliente = cliente;
+	public void setClientePedido(Cliente clientepedido) {
+		this.clientePedido = clientepedido;
 	}
-
+	
+	
 	public Endereco getEnderecoEntrega() {
 		return enderecoEntrega;
 	}
@@ -123,13 +110,14 @@ public class Pedido implements Serializable {
 		this.enderecoEntrega = enderecoEntrega;
 	}
 
-	public Set<ItemPedido> getItens() {
+	public Set<ItemPedidoNew> getItens() {
 		return itens;
 	}
 
-	public void setItens(Set<ItemPedido> itens) {
+	public void setItens(Set<ItemPedidoNew> itens) {
 		this.itens = itens;
 	}
+	
 	public String getEstadoPAgamento() {
 		return estadoPagamento;
 	}
@@ -164,7 +152,7 @@ public class Pedido implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Pedido other = (Pedido) obj;
+		PedidoNew other = (PedidoNew) obj;
 		if (idpedido == null) {
 			if (other.idpedido != null)
 				return false;

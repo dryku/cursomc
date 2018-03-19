@@ -8,16 +8,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
-import org.hibernate.engine.jdbc.ClobImplementer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.HandlerMapping;
 
 import com.adrianosantos.cursomc.dominio.Cliente;
-import com.adrianosantos.cursomc.dominio.enums.TipoCliente;
 import com.adrianosantos.cursomc.dto.ClienteDTO;
 import com.adrianosantos.cursomc.repositorios.ClienteRepositorio;
 import com.adrianosantos.cursomc.resources.exception.CampoMensagem;
-import com.adrianosantos.cursomc.services.validation.utils.BR;
 
 public class AtualizarClienteValidator implements ConstraintValidator<AtualizarCliente, ClienteDTO> {
 

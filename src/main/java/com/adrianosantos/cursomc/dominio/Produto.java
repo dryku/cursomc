@@ -15,39 +15,40 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 
 @Entity
+
 public class Produto implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer Idproduto;
+	private Integer idProduto;
+
 	private String nmproduto;
 	private Double preco;
-	
-	
+		
 	@JsonIgnore
 	@ManyToMany
 	@JoinTable (name = "PRODUTO_CATEGORIA",
 		joinColumns = @JoinColumn(name = "produto_id"),
-		inverseJoinColumns = @JoinColumn(name = "categoria_id")
-	)
+		inverseJoinColumns = @JoinColumn(name = "categoria_id"))
 	private List<Categoria> categorias = new ArrayList<>();
 	
 	@JsonIgnore
 	@OneToMany(mappedBy="id.produto")
 	private Set<ItemPedido> itens = new HashSet<>();
 	
+
+	
 	Produto() {
 	}
 	
 	public Produto(Integer idproduto, String nmproduto, Double preco) {
 		super();
-		this.Idproduto = idproduto;
+		this.idProduto = idproduto;
 		this.nmproduto = nmproduto;
 		this.preco = preco;
 	}
@@ -62,12 +63,12 @@ public class Produto implements Serializable {
 	} 
 	
 	
-	public Integer getIdproduto() {
-		return Idproduto;
+	public Integer getidProduto() {
+		return idProduto;
 	}
 
-	public void setIdproduto(Integer idproduto) {
-		Idproduto = idproduto;
+	public void setidProduto(Integer idproduto) {
+		idProduto = idproduto;
 	}
 
 	public String getNmproduto() {
@@ -101,13 +102,12 @@ public class Produto implements Serializable {
 	public void setItens(Set<ItemPedido> itens) {
 		this.itens = itens;
 	}
-
 	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((Idproduto == null) ? 0 : Idproduto.hashCode());
+		result = prime * result + ((idProduto == null) ? 0 : idProduto.hashCode());
 		return result;
 	}
 
@@ -120,10 +120,10 @@ public class Produto implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		Produto other = (Produto) obj;
-		if (Idproduto == null) {
-			if (other.Idproduto != null)
+		if (idProduto == null) {
+			if (other.idProduto != null)
 				return false;
-		} else if (!Idproduto.equals(other.Idproduto))
+		} else if (!idProduto.equals(other.idProduto))
 			return false;
 		return true;
 	}

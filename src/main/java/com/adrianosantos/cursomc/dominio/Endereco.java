@@ -9,7 +9,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
@@ -18,7 +17,7 @@ public class Endereco implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer idendeco;
+	private Integer idendereco;
 	private String logradouro;
 	private String numero;
 	private String complemento;
@@ -37,10 +36,10 @@ public class Endereco implements Serializable {
 	public Endereco() {
 	}
 
-	public Endereco(Integer idendeco, String logradouro, String numero, String complemento, String bairro, String cep,
+	public Endereco(Integer idendereco, String logradouro, String numero, String complemento, String bairro, String cep,
 			Cliente çliente, Cidade cidade) {
 		super();
-		this.idendeco = idendeco;
+		this.idendereco = idendereco;
 		this.logradouro = logradouro;
 		this.numero = numero;
 		this.complemento = complemento;
@@ -50,12 +49,12 @@ public class Endereco implements Serializable {
 		this.cidade = cidade;
 	}
 
-	public Integer getIdendeco() {
-		return idendeco;
+	public Integer getIdendereco() {
+		return idendereco;
 	}
 
-	public void setIdendeco(Integer idendeco) {
-		this.idendeco = idendeco;
+	public void setIdendereco(Integer idendereco) {
+		this.idendereco = idendereco;
 	}
 
 	public String getLogradouro() {
@@ -118,7 +117,7 @@ public class Endereco implements Serializable {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((idendeco == null) ? 0 : idendeco.hashCode());
+		result = prime * result + ((idendereco == null) ? 0 : idendereco.hashCode());
 		return result;
 	}
 
@@ -131,10 +130,10 @@ public class Endereco implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		Endereco other = (Endereco) obj;
-		if (idendeco == null) {
-			if (other.idendeco != null)
+		if (idendereco == null) {
+			if (other.idendereco != null)
 				return false;
-		} else if (!idendeco.equals(other.idendeco))
+		} else if (!idendereco.equals(other.idendereco))
 			return false;
 		return true;
 	}

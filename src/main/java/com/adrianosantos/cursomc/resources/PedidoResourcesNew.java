@@ -11,25 +11,25 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import com.adrianosantos.cursomc.dominio.Pedido;
-import com.adrianosantos.cursomc.services.PedidoService;
+import com.adrianosantos.cursomc.dominio.PedidoNew;
+import com.adrianosantos.cursomc.services.PedidoServiceNew;
 
 @RestController
-@RequestMapping(value = "/pedidos")
-public class PedidoResources {
+@RequestMapping(value = "/pedidosnew")
+public class PedidoResourcesNew {
 
 	@Autowired
-	PedidoService pedservice;
+	PedidoServiceNew pedservice;
 
 	@RequestMapping(value="/{id}", method=RequestMethod.GET)
-	public ResponseEntity<?> buscarPedidoId(@PathVariable Integer id) {
+	public ResponseEntity<?> buscarPedidoNewId(@PathVariable Integer id) {
 	
-	Pedido obj = pedservice.buscar(id);
+	PedidoNew obj = pedservice.buscar(id);
     return ResponseEntity.ok().body(obj);
 	}
 	
 	@RequestMapping(method = RequestMethod.POST)
-	public ResponseEntity<Void> salvar( @RequestBody Pedido obj) {
+	public ResponseEntity<Void> salvar( @RequestBody PedidoNew obj) {
 		obj = pedservice.salvar(obj);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{idpedido}")
 				.buildAndExpand(obj.getIdpedido()).toUri();

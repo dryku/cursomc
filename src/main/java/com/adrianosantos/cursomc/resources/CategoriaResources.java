@@ -41,7 +41,6 @@ public class CategoriaResources {
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{idcategoria}")
 				.buildAndExpand(objcat.getIdcategoria()).toUri();
 		return ResponseEntity.created(uri).build();
-
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)

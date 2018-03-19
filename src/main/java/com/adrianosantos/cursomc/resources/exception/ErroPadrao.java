@@ -9,6 +9,7 @@ public class ErroPadrao implements Serializable {
 
 	private Integer status;
 	private String msg;
+	@JsonFormat(pattern = "dd/MM/yyyy")
 	private Long timestamp;
 	
 	
