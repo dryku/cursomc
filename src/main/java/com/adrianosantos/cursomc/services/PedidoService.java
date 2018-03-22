@@ -9,6 +9,7 @@ import com.adrianosantos.cursomc.dominio.ItemPedido;
 import com.adrianosantos.cursomc.dominio.Pedido;
 import com.adrianosantos.cursomc.dominio.PgtoBoleto;
 import com.adrianosantos.cursomc.dominio.enums.EstadoPgto;
+import com.adrianosantos.cursomc.repositorios.ClienteRepositorio;
 import com.adrianosantos.cursomc.repositorios.FormaPagamentoRepositorio;
 import com.adrianosantos.cursomc.repositorios.ItemPedidoRepositorio;
 import com.adrianosantos.cursomc.repositorios.PagamentoRepositorio;
@@ -31,7 +32,7 @@ public class PedidoService {
 	private ItemPedidoRepositorio itemrep;
 
 	@Autowired
-	FormaPagamentoRepositorio formapgtorep;
+	private ClienteRepositorio clirep;
 
 	public Pedido buscar(Integer idped) {
 		Pedido obj = pedrep.findOne(idped);
@@ -45,7 +46,8 @@ public class PedidoService {
 		obj.setIdpedido(null);
 		obj.setDtapedido(new Date());
 
-		obj.getPgto().setEstadopgto(EstadoPgto.CANCELADO);
+		obj.setCliente(clirep.findOne(obj.getCliente().getIdcliente()));
+		obj.getPgto().setEstadopgto(EstadoPgto.PENDENTE);
 		obj.getPgto().setPedido(obj);
 
 		// obj.getFormapagamentos()
@@ -59,10 +61,12 @@ public class PedidoService {
 
 		for (ItemPedido itempedido : obj.getItens()) {
 			itempedido.setDescontoitem(0.0);
-			itempedido.setPrecoitem(prodrep.findOne(itempedido.getProduto().getidProduto()).getPreco());
+			itempedido.setProduto(prodrep.findOne(itempedido.getProduto().getIdProduto()));
+			itempedido.setPrecoitem(itempedido.getProduto().getPreco());
 			itempedido.setPedido(obj);
 		}
 		itemrep.save(obj.getItens());
+		System.out.println(obj);
 		return obj;
 	}
 }

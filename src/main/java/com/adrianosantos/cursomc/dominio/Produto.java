@@ -26,7 +26,6 @@ public class Produto implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer idProduto;
-
 	private String nmproduto;
 	private Double preco;
 		
@@ -40,8 +39,6 @@ public class Produto implements Serializable {
 	@JsonIgnore
 	@OneToMany(mappedBy="id.produto")
 	private Set<ItemPedido> itens = new HashSet<>();
-	
-
 	
 	Produto() {
 	}
@@ -62,15 +59,14 @@ public class Produto implements Serializable {
 		return lista;
 	} 
 	
-	
-	public Integer getidProduto() {
+	public Integer getIdProduto() {
 		return idProduto;
 	}
 
-	public void setidProduto(Integer idproduto) {
-		idProduto = idproduto;
+	public void setIdProduto(Integer idProduto) {
+		this.idProduto = idProduto;
 	}
-
+	
 	public String getNmproduto() {
 		return nmproduto;
 	}
@@ -127,6 +123,5 @@ public class Produto implements Serializable {
 			return false;
 		return true;
 	}
-
 
 }

@@ -1,10 +1,13 @@
 package com.adrianosantos.cursomc.dominio;
 
 import java.io.Serializable;
+import java.text.NumberFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Locale;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -32,18 +35,12 @@ public class Pedido implements Serializable {
 
 	@JsonFormat(pattern = "dd/MM/yyyy hh:mm:ss")
 	private Date dtapedido;
-	private String estadoPagamento;
-	private Integer estadoPgto;
+	// private String estadoPagamento;
+	// private Integer estadoPgto;
 
 	@OneToOne(cascade = CascadeType.ALL, mappedBy = "pedido")
 	private Pagamento pgto;
 
-
-/*	@JsonIgnore
-	@ManyToMany(cascade = CascadeType.ALL)
-	@JoinTable(name = "PEDIDO_FORMAPAGAMENTO", joinColumns = @JoinColumn(name = "pedido_id"), inverseJoinColumns = @JoinColumn(name = "formapagamento_id"))
-	private List<FormaPagamentoDRY> formapagamentos = new ArrayList<>();
-*/
 	@ManyToOne
 	@JoinColumn(name = "cliente_id")
 	private Cliente cliente;
@@ -90,22 +87,13 @@ public class Pedido implements Serializable {
 		this.dtapedido = dtapedido;
 	}
 
-    public Pagamento getPgto() {
+	public Pagamento getPgto() {
 		return pgto;
 	}
 
 	public void setPgto(Pagamento pgto) {
 		this.pgto = pgto;
 	}
-
-/*	public List<FormaPagamentoDRY> getFormapagamentos() {
-		return formapagamentos;
-	}
-
-	public void setFormapagamentos(List<FormaPagamentoDRY> formapagamentos) {
-		this.formapagamentos = formapagamentos;
-	}
-*/
 
 	public Cliente getCliente() {
 		return cliente;
@@ -130,24 +118,19 @@ public class Pedido implements Serializable {
 	public void setItens(Set<ItemPedido> itens) {
 		this.itens = itens;
 	}
-	public String getEstadoPAgamento() {
-		return estadoPagamento;
-	}
+	/*
+	 * public String getEstadoPAgamento() { return estadoPagamento; }
+	 * 
+	 * public void setEstadoPagamento(String estadoPagamento) { this.estadoPagamento
+	 * = estadoPagamento; }
+	 * 
+	 * public Integer getEstadoPgto() { return estadoPgto; }
+	 * 
+	 * public void setEstadoPgto(Integer estadoPgto) { this.estadoPgto = estadoPgto;
+	 * }
+	 * 
+	 */
 
-	public void setEstadoPagamento(String estadoPagamento) {
-		this.estadoPagamento = estadoPagamento;
-	}
-
-	public Integer getEstadoPgto() {
-		return estadoPgto;
-	}
-
-	public void setEstadoPgto(Integer estadoPgto) {
-		this.estadoPgto = estadoPgto;
-	}
-	
-	
-	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -173,5 +156,26 @@ public class Pedido implements Serializable {
 		return true;
 	}
 
+	@Override
+	public String toString() {
+		NumberFormat nf = NumberFormat.getCurrencyInstance(new Locale("pt", "BR"));
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
+		StringBuilder builder = new StringBuilder();
+		builder.append("Pedido Numero: ");
+		builder.append(getIdpedido());
+		builder.append(", Data: ");
+		builder.append(sdf.format(getDtapedido()));
+		builder.append(", Cliente : ");
+		builder.append(getCliente().getNmcliente());
+		builder.append(", Situação do Pedido: ");
+		builder.append(getPgto().getEstadopgto().getDescricaoestadopgto());
+		builder.append("\nDetalhe:\n");
+		for (ItemPedido itemPedido : getItens()) {
+			builder.append(itemPedido.toString());
+		}
+		builder.append("Valor Total: ");
+		builder.append(nf.format(getValorTotal()));
+		return builder.toString();
+	}
 
 }

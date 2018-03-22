@@ -18,6 +18,7 @@ import com.adrianosantos.cursomc.dominio.Cliente;
 import com.adrianosantos.cursomc.dominio.Endereco;
 import com.adrianosantos.cursomc.dominio.Estado;
 import com.adrianosantos.cursomc.dominio.FormaPagamentoDRY;
+import com.adrianosantos.cursomc.dominio.ItemPedido;
 import com.adrianosantos.cursomc.dominio.Pagamento;
 import com.adrianosantos.cursomc.dominio.Pedido;
 import com.adrianosantos.cursomc.dominio.PgtoBoleto;
@@ -176,10 +177,10 @@ public class CursomcApplication implements CommandLineRunner {
 
 		pedrepo.save(Arrays.asList(ped1, ped2));
 		pgtorepo.save(Arrays.asList(pgto1, pgto2));
-/*
-		ItemPedidoNew ip1 = new ItemPedidoNew(ped1, prod1, 0.00, 1, 2000.00);
-		ItemPedidoNew ip2 = new ItemPedidoNew(ped1, prod3, 0.00, 2, 80.00);
-		ItemPedidoNew ip3 = new ItemPedidoNew(ped2, prod2, 100.00, 1, 800.00);
+
+		ItemPedido ip1 = new ItemPedido(ped1, prod1, 0.00, 1, 2000.00);
+		ItemPedido ip2 = new ItemPedido(ped1, prod3, 0.00, 2, 80.00);
+		ItemPedido ip3 = new ItemPedido(ped2, prod2, 100.00, 1, 800.00);
 
 		ped1.getItens().addAll(Arrays.asList(ip1, ip2));
 		ped2.getItens().addAll(Arrays.asList(ip3));
@@ -188,6 +189,5 @@ public class CursomcApplication implements CommandLineRunner {
 		prod2.getItens().addAll(Arrays.asList(ip3));
 		prod3.getItens().addAll(Arrays.asList(ip2));
 
-		itempedrepo.save(Arrays.asList(ip1, ip2, ip3));
-*/	}
+		itempedrepo.save(Arrays.asList(ip1, ip2, ip3));	}
 }
